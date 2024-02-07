@@ -19,7 +19,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
             @JsonSubTypes.Type(value = BCOSAccount.class, name = "BCOS2.0"),
             @JsonSubTypes.Type(value = BCOSAccount.class, name = "GM_BCOS2.0"),
             @JsonSubTypes.Type(value = FabricAccount.class, name = "Fabric1.4"),
-            @JsonSubTypes.Type(value = FabricAccount.class, name = "Fabric2.0")
+            @JsonSubTypes.Type(value = FabricAccount.class, name = "Fabric2.0"),
+            @JsonSubTypes.Type(value = ChainMakerCertAccount.class, name = "chainmaker")
         })
 public class ChainAccount {
     public Integer keyID;
