@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Objects;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -136,24 +135,18 @@ public class ChainMakerCertAccount extends ChainAccount {
         if (this == o) return true;
         if (!(o instanceof ChainMakerCertAccount)) return false;
         ChainMakerCertAccount that = (ChainMakerCertAccount) o;
-        return Objects.equal(authType, that.authType) &&
-                Objects.equal(pkcs11Enable, that.pkcs11Enable) &&
-                Objects.equal(userSignCert, that.userSignCert) &&
-                Objects.equal(userSignKey, that.userSignKey) &&
-                Objects.equal(pubKey, that.pubKey) &&
-                Objects.equal(secKey, that.secKey) &&
-                Objects.equal(orgId, that.orgId);
+        return Objects.equal(authType, that.authType)
+                && Objects.equal(pkcs11Enable, that.pkcs11Enable)
+                && Objects.equal(userSignCert, that.userSignCert)
+                && Objects.equal(userSignKey, that.userSignKey)
+                && Objects.equal(pubKey, that.pubKey)
+                && Objects.equal(secKey, that.secKey)
+                && Objects.equal(orgId, that.orgId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(
-                type,
-                authType,
-                pkcs11Enable,
-                userSignCert,
-                pubKey,
-                orgId);
+        return Objects.hashCode(type, authType, pkcs11Enable, userSignCert, pubKey, orgId);
     }
 
     @Override
