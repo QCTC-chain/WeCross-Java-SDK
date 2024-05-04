@@ -51,6 +51,17 @@ public interface WeCrossRPC {
 
     RemoteCall<UAResponse> login(String name, String password) throws Exception;
 
+    /**
+     * @description 为集成qctc微服务框架增加的非密码登录接口，只能管理员角色登录
+     * @param name  用户名
+     * @param tokenKey  sa-token的tokenkey
+     * @param tokenVal  sa-token的tokenval
+     * @return com.webank.wecrosssdk.rpc.RemoteCall<com.webank.wecrosssdk.rpc.methods.response.UAResponse>
+     * @author 2024/4/30
+     * @date zhangyang 09:36:59
+     */
+    RemoteCall<UAResponse> loginWithoutPwd(String name, String tokenKey, String tokenVal) throws Exception;
+
     RemoteCall<UAResponse> logout();
 
     RemoteCall<UAResponse> addChainAccount(String type, ChainAccount chainAccount);
