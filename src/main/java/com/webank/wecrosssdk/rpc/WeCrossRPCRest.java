@@ -14,6 +14,8 @@ import com.webank.wecrosssdk.rpc.methods.request.*;
 import com.webank.wecrosssdk.rpc.methods.request.UARequest;
 import com.webank.wecrosssdk.rpc.methods.response.*;
 import com.webank.wecrosssdk.rpc.service.WeCrossService;
+
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -242,6 +244,14 @@ public class WeCrossRPCRest implements WeCrossRPC {
         Request<CommandRequest> request = new Request<>(commandRequest);
         String uri = "/resource/" + path.replace('.', '/') + "/customCommand";
         return new RemoteCall<>(weCrossService, "POST", uri, CommandResponse.class, request);
+    }
+
+    @Override
+    public RemoteCall<SubscribeResponse> subscribeEvent(String path, long from, long to, List<String> topics) {
+        SubscribeRequest subscribeRequest = new SubscribeRequest(from, to, topics);
+        Request<SubscribeRequest> request = new Request<>(subscribeRequest);
+        String uri = "/resource/" + path.replace('.', '/') + "/subscribeEvent";
+        return new RemoteCall<>(weCrossService, "POST", uri, SubscribeResponse.class, request);
     }
 
     @Override

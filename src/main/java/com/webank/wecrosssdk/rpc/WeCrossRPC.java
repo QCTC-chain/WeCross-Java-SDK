@@ -4,6 +4,8 @@ import com.webank.wecrosssdk.rpc.common.account.ChainAccount;
 import com.webank.wecrosssdk.rpc.methods.Response;
 import com.webank.wecrosssdk.rpc.methods.response.*;
 
+import java.util.List;
+
 public interface WeCrossRPC {
 
     RemoteCall<Response> test();
@@ -44,6 +46,8 @@ public interface WeCrossRPC {
             String transactionID, String[] paths, String method, String... args) throws Exception;
 
     RemoteCall<CommandResponse> customCommand(String command, String path, Object... args);
+
+    RemoteCall<SubscribeResponse> subscribeEvent(String path, long from, long to, List<String> topics);
 
     RemoteCall<XATransactionListResponse> listXATransactions(int size);
 
