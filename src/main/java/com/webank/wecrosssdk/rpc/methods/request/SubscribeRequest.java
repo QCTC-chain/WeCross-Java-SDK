@@ -1,6 +1,5 @@
 package com.webank.wecrosssdk.rpc.methods.request;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class SubscribeRequest {
