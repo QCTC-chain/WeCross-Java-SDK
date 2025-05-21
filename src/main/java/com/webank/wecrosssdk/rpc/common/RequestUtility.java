@@ -46,6 +46,34 @@ public class RequestUtility {
         return params;
     }
 
+    public static String buildLoginWithoutPwdParams(WeCrossRPC weCrossRPC, String username)
+            throws Exception {
+        PubResponse pubResponse = weCrossRPC.queryPub().send();
+        AuthCodeResponse authCodeResponse = weCrossRPC.queryAuthCode().send();
+
+        String pub = pubResponse.getData().getPub();
+        AuthCodeReceipt.AuthCodeInfo authCode = authCodeResponse.getData().getAuthCode();
+
+        if (logger.isDebugEnabled()) {
+            logger.debug(
+                    "login username: {}, pub: {}, randomToken: {}",
+                    username,
+                    pub,
+                    authCode.getRandomToken());
+        }
+
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername(username);
+        loginRequest.setRandomToken(authCode.getRandomToken());
+
+        PublicKey publicKey = RSAUtility.createPublicKey(pub);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String params =
+                RSAUtility.encryptBase64(objectMapper.writeValueAsBytes(loginRequest), publicKey);
+
+        return params;
+    }
+
     public static String buildRegisterParams(
             WeCrossRPC weCrossRPC, String username, String password) throws Exception {
         PubResponse pubResponse = weCrossRPC.queryPub().send();

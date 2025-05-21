@@ -17,6 +17,7 @@ import com.webank.wecrosssdk.rpc.common.TransactionContext;
 import com.webank.wecrosssdk.rpc.methods.Callback;
 import com.webank.wecrosssdk.rpc.methods.Request;
 import com.webank.wecrosssdk.rpc.methods.Response;
+import com.webank.wecrosssdk.rpc.methods.request.LoginWithoutPwdRequest;
 import com.webank.wecrosssdk.rpc.methods.request.UARequest;
 import com.webank.wecrosssdk.rpc.methods.request.XATransactionRequest;
 import com.webank.wecrosssdk.rpc.methods.response.UAResponse;
@@ -122,6 +123,8 @@ public class WeCrossRPCService implements WeCrossService {
                     getUAResponseInfo(uri, (UARequest) request.getData(), (UAResponse) response);
                 } else if (request.getExt() instanceof UARequest) {
                     getUAResponseInfo(uri, (UARequest) request.getExt(), (UAResponse) response);
+                } else if (request.getExt() instanceof LoginWithoutPwdRequest) {
+                    getUARespWitoutPwd(uri, (LoginWithoutPwdRequest) request.getExt(), (UAResponse) response);
                 }
             }
 
@@ -177,6 +180,19 @@ public class WeCrossRPCService implements WeCrossService {
         }
     }
 
+    public void getUARespWitoutPwd(String uri, LoginWithoutPwdRequest loginWithoutPwdRequest, UAResponse response)
+            throws WeCrossSDKException {
+        String credential = response.getUAReceipt().getCredential();
+
+        logger.info("CurrentUser: {}", loginWithoutPwdRequest.getUsername());
+        if (credential == null) {
+            logger.error("Login fail, credential in UAResponse is null");
+            throw new WeCrossSDKException(
+                    ErrorCode.RPC_ERROR, "Login fail, credential in UAResponse is null!");
+        }
+        AuthenticationManager.setCurrentUser(loginWithoutPwdRequest.getUsername(), credential);
+    }
+
     @Override
     public <T extends Response> void asyncSend(
             String httpMethod,
@@ -214,6 +230,12 @@ public class WeCrossRPCService implements WeCrossService {
                             "Command " + method + " needs Auth, please login.");
                 }
                 builder.setHeader(HttpHeaders.AUTHORIZATION, currentUserCredential);
+            }
+
+            if (request.getExt() instanceof LoginWithoutPwdRequest) {
+                // 无密码登录，将sa-token信息放到header，wecross会透传到账户管理服务
+                LoginWithoutPwdRequest loginWithoutPwdRequest = (LoginWithoutPwdRequest)request.getExt();
+                builder.setHeader(loginWithoutPwdRequest.getTokenKey(), loginWithoutPwdRequest.getTokenVal());
             }
 
             builder.setHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
