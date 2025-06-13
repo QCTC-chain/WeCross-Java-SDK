@@ -19,7 +19,8 @@ public class LoginWithoutPwdRequest {
 
     @JsonIgnore private Logger logger = LoggerFactory.getLogger(LoginWithoutPwdRequest.class);
 
-    public LoginWithoutPwdRequest(String username, String tokenKey, String tokenVal, ChainAccount chainAccount) {
+    public LoginWithoutPwdRequest(
+            String username, String tokenKey, String tokenVal, ChainAccount chainAccount) {
         this.username = username;
         this.tokenKey = tokenKey;
         this.tokenVal = tokenVal;
@@ -66,7 +67,6 @@ public class LoginWithoutPwdRequest {
     public void setUsername(String username) {
         this.username = username;
     }
-
 
     public String getClientType() {
         return clientType;

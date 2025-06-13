@@ -291,12 +291,15 @@ public class WeCrossRPCRest implements WeCrossRPC {
     }
 
     @Override
-    public RemoteCall<UAResponse> loginWithoutPwd(String name, String tokenKey, String tokenVal) throws Exception {
-        LoginWithoutPwdRequest loginWithoutPwdRequest = new LoginWithoutPwdRequest(name, tokenKey, tokenVal);
+    public RemoteCall<UAResponse> loginWithoutPwd(String name, String tokenKey, String tokenVal)
+            throws Exception {
+        LoginWithoutPwdRequest loginWithoutPwdRequest =
+                new LoginWithoutPwdRequest(name, tokenKey, tokenVal);
         String loginParams = RequestUtility.buildLoginWithoutPwdParams(this, name);
         Request<String> request = new Request<>(loginParams);
         request.setExt(loginWithoutPwdRequest);
-        return new RemoteCall<>(weCrossService, "POST", "/admin/auth/loginWithoutPwd", UAResponse.class, request);
+        return new RemoteCall<>(
+                weCrossService, "POST", "/admin/auth/loginWithoutPwd", UAResponse.class, request);
     }
 
     @Override

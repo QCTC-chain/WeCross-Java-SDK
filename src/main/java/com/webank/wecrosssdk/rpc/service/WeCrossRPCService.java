@@ -124,7 +124,8 @@ public class WeCrossRPCService implements WeCrossService {
                 } else if (request.getExt() instanceof UARequest) {
                     getUAResponseInfo(uri, (UARequest) request.getExt(), (UAResponse) response);
                 } else if (request.getExt() instanceof LoginWithoutPwdRequest) {
-                    getUARespWitoutPwd(uri, (LoginWithoutPwdRequest) request.getExt(), (UAResponse) response);
+                    getUARespWitoutPwd(
+                            uri, (LoginWithoutPwdRequest) request.getExt(), (UAResponse) response);
                 }
             }
 
@@ -180,7 +181,8 @@ public class WeCrossRPCService implements WeCrossService {
         }
     }
 
-    public void getUARespWitoutPwd(String uri, LoginWithoutPwdRequest loginWithoutPwdRequest, UAResponse response)
+    public void getUARespWitoutPwd(
+            String uri, LoginWithoutPwdRequest loginWithoutPwdRequest, UAResponse response)
             throws WeCrossSDKException {
         String credential = response.getUAReceipt().getCredential();
 
@@ -234,8 +236,10 @@ public class WeCrossRPCService implements WeCrossService {
 
             if (request.getExt() instanceof LoginWithoutPwdRequest) {
                 // 无密码登录，将sa-token信息放到header，wecross会透传到账户管理服务
-                LoginWithoutPwdRequest loginWithoutPwdRequest = (LoginWithoutPwdRequest)request.getExt();
-                builder.setHeader(loginWithoutPwdRequest.getTokenKey(), loginWithoutPwdRequest.getTokenVal());
+                LoginWithoutPwdRequest loginWithoutPwdRequest =
+                        (LoginWithoutPwdRequest) request.getExt();
+                builder.setHeader(
+                        loginWithoutPwdRequest.getTokenKey(), loginWithoutPwdRequest.getTokenVal());
             }
 
             builder.setHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
