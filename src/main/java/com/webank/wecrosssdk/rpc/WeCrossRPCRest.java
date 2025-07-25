@@ -4,6 +4,7 @@ import com.webank.wecrosssdk.common.Constant;
 import com.webank.wecrosssdk.common.StatusCode;
 import com.webank.wecrosssdk.exception.ErrorCode;
 import com.webank.wecrosssdk.exception.WeCrossSDKException;
+import com.webank.wecrosssdk.rpc.common.LoginRequest;
 import com.webank.wecrosssdk.rpc.common.RequestUtility;
 import com.webank.wecrosssdk.rpc.common.TransactionContext;
 import com.webank.wecrosssdk.rpc.common.account.ChainAccount;
@@ -300,6 +301,15 @@ public class WeCrossRPCRest implements WeCrossRPC {
         request.setExt(loginWithoutPwdRequest);
         return new RemoteCall<>(
                 weCrossService, "POST", "/admin/auth/loginWithoutPwd", UAResponse.class, request);
+    }
+
+    @Override
+    public RemoteCall<UAResponse> routerLogin(String name) throws Exception {
+        UARequest uaRequest = new UARequest(name, "");
+        LoginRequest loginParams = RequestUtility.buildRouterLoginParams(this, name);
+        Request<LoginRequest> request = new Request<>(loginParams);
+        request.setExt(uaRequest);
+        return new RemoteCall<>(weCrossService, "POST", "/auth/routerLogin", UAResponse.class, request);
     }
 
     @Override

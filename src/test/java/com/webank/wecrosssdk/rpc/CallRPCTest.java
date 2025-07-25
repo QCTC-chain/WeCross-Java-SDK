@@ -141,4 +141,5 @@ public class CallRPCTest {
         UAResponse uaResponse = weCrossRPC.logout().send();
         Assert.assertEquals(uaResponse.getUAReceipt().getErrorCode(), 0);
     }
+
 }

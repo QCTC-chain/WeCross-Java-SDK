@@ -164,7 +164,7 @@ public class WeCrossRPCService implements WeCrossService {
     public void getUAResponseInfo(String uri, UARequest uaRequest, UAResponse response)
             throws WeCrossSDKException {
         String query = uri.substring(1).split("/")[1];
-        if ("login".equals(query)) {
+        if ("login".equals(query) || "routerLogin".equals(query)) {
             String credential = response.getUAReceipt().getCredential();
 
             logger.info("CurrentUser: {}", uaRequest.getUsername());

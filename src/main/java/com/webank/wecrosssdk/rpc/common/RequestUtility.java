@@ -74,6 +74,23 @@ public class RequestUtility {
         return params;
     }
 
+    public static LoginRequest buildRouterLoginParams(WeCrossRPC weCrossRPC, String username)
+            throws Exception {
+//        PubResponse pubResponse = weCrossRPC.queryPub().send();
+//        String pub = pubResponse.getData().getPub();
+
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername(username);
+
+//        PublicKey publicKey = RSAUtility.createPublicKey(pub);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String params =
+//                RSAUtility.encryptBase64(objectMapper.writeValueAsBytes(loginRequest), publicKey);
+//        String params = objectMapper.writeValueAsString(loginRequest);
+
+        return loginRequest;
+    }
+
     public static String buildRegisterParams(
             WeCrossRPC weCrossRPC, String username, String password) throws Exception {
         PubResponse pubResponse = weCrossRPC.queryPub().send();

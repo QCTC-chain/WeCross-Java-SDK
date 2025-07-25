@@ -68,6 +68,16 @@ public interface WeCrossRPC {
     RemoteCall<UAResponse> loginWithoutPwd(String name, String tokenKey, String tokenVal)
             throws Exception;
 
+    /**
+     * @description routerlogin接口
+     * @param name 用户名
+     * @return
+     *     com.webank.wecrosssdk.rpc.RemoteCall<com.webank.wecrosssdk.rpc.methods.response.UAResponse>
+     * @author zhangyang
+     * @date 2025/7/24
+     */
+    RemoteCall<UAResponse> routerLogin(String name) throws Exception;
+
     RemoteCall<UAResponse> logout();
 
     RemoteCall<UAResponse> addChainAccount(String type, ChainAccount chainAccount);

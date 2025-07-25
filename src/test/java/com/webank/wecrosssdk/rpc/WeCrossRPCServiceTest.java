@@ -3,6 +3,8 @@ package com.webank.wecrosssdk.rpc;
 import com.webank.wecrosssdk.exception.WeCrossSDKException;
 import com.webank.wecrosssdk.rpc.common.Version;
 import com.webank.wecrosssdk.rpc.methods.Request;
+import com.webank.wecrosssdk.rpc.methods.response.AccountResponse;
+import com.webank.wecrosssdk.rpc.methods.response.ResourceResponse;
 import com.webank.wecrosssdk.rpc.methods.response.TransactionResponse;
 import com.webank.wecrosssdk.rpc.service.Connection;
 import com.webank.wecrosssdk.rpc.service.WeCrossRPCService;
@@ -19,8 +21,10 @@ public class WeCrossRPCServiceTest {
             connection.setCaCert("caCrt");
             connection.setSslCert("sslCrt");
             connection.setSslKey("sslKey");
-            WeCrossRPCFactory.build(weCrossService);
-        } catch (WeCrossSDKException e) {
+            WeCrossRPC weCrossRPC = WeCrossRPCFactory.build(weCrossService);
+            weCrossRPC.routerLogin("admin").send();
+            ResourceResponse response = weCrossRPC.listResources(true).send();
+        } catch (Exception e) {
             Assert.assertNotNull(e);
         }
     }
